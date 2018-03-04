@@ -1,5 +1,3 @@
-
-sdfsdfsdf
 <aol-map [width]="'100%'" [height]="'100%'">
 	<aol-view [zoom]="zoom" [zoomAnimation]="true">
 		<aol-coordinate [x]="5" [y]="45" [srid]="'EPSG:4326'"></aol-coordinate>
@@ -31,11 +29,25 @@ sdfsdfsdf
 	          [anchorXUnits]="'fraction'" [anchorYUnits]="'fraction'"
 	          [scale]="0.1"
 	          [anchorOrigin]="'top-left'">
-	        </aol-style-icon>
+			</aol-style-icon>
+			<aol-feature>
+				<aol-geometry-polygon>
+					<aol-collection-coordinates 
+						[coordinates]="[[5, 45],[5.05, 45.05],[5.05, 44.95],[4.95, 44.95]]"
+						[srid]="'EPSG:4326'"
+					>
+					</aol-collection-coordinates>
+				</aol-geometry-polygon>
+				<aol-style>
+					<aol-style-stroke [color]="'red'"></aol-style-stroke>
+					<aol-style-fill [color]="[255,0,0,0.5]"></aol-style-fill>
+				</aol-style>
+			</aol-feature>
 	      </aol-style>
 	    </aol-feature>
 		</aol-source-vector>
 	</aol-layer-vector>
+	
 </aol-map>
 
 <span>opacity:</span><button (click)="increaseOpacity()">+</button><button (click)="decreaseOpacity()">-</button><br>
