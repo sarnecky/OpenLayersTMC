@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es5",
+        "lib": ["es6", "dom", "es2015.iterable"],
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "./dist"
+    },
+    "files": [
+        "src/index.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ],
+    "angularCompilerOptions": {
+        "genDir": "aot",
+        "debug": true
+    }
+}
