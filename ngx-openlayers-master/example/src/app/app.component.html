@@ -1,4 +1,11 @@
 <div class="sidepanel">
     <span class="sidepanel-title">Polygons</span>
+    <table>
+        <tr *ngFor="let polygon of polygons">
+            <td></td>
+            <td>{{polygon.Color}}</td>
+            <td>{{polygon.AreaSurface}}<sup>2</sup></td>
+        </tr>
+    </table>
 </div>
 <tmc-map (onPolygonCreated)="catchPolygonCreatedEvent($event)">Map is loading...</tmc-map>
