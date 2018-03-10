@@ -3,11 +3,11 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AngularOpenlayersModule} from 'ngx-openlayers';
 
-import {AppComponent} from './app.component';
+import { MapComponent } from "./map/map.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -15,7 +15,7 @@ import {AppComponent} from './app.component';
     AngularOpenlayersModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [MapComponent],
   schemas: [
     NO_ERRORS_SCHEMA
   ]

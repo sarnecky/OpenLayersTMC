@@ -1,0 +1,14 @@
+<aol-map [width]="'100%'" [height]="'100%'">
+    <aol-interaction-mousewheelzoom></aol-interaction-mousewheelzoom>
+
+    <aol-view [zoom]="zoom">
+        <aol-coordinate [x]="18.068611" [y]="59.329444" [srid]="'EPSG:4326'"></aol-coordinate>
+    </aol-view>
+    <aol-layer-tile>
+        <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+    <aol-layer-vector>
+        <aol-source-vector #sourceVector></aol-source-vector>
+    </aol-layer-vector>
+    <aol-interaction-draw type="Polygon" [source]="sourceVector.instance"></aol-interaction-draw>
+ </aol-map>
