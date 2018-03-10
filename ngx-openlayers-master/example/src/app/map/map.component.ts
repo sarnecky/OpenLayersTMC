@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import ol from 'ol';
 import Sphere from 'ol/sphere';
 import Geometry from 'ol/geom/geometry';
+import { Polygon } from "../../CommonModels/polygon";
 
 @Component({
     selector: 'tmc-map',
@@ -10,10 +11,19 @@ import Geometry from 'ol/geom/geometry';
 })
 export class MapComponent{
     public zoom = 7;
+    
+    @Output() onPolygonCreated: EventEmitter<Polygon>;
+    
+    constructor(){
+        this.onPolygonCreated = new EventEmitter<Polygon>();
+    }
 
-    catchEvent(event){
+    catchDrawEndEvent(event){
         var polygon = event.feature.O.geometry;
-        console.log(this.calculateDistance(polygon));
+        var distance = this.calculateDistance(polygon);
+        console.log(distance);
+        var polygonForEvent = new Polygon(null, distance, "blue");
+        this.onPolygonCreated.emit(polygonForEvent)
     }
 
     calculateDistance(polygon: ol.geom.Geometry): number {
