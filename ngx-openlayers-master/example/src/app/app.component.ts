@@ -9,8 +9,13 @@ import { Polygon } from "../CommonModels/polygon";
 
 export class AppComponent{
     public zoom = 7;
+    public polygons: Array<Polygon>
+    constructor(){
+        this.polygons = new Array<Polygon>();
+    }
     catchPolygonCreatedEvent(event){
         console.log("received new polygon");
         console.log(event); 
+        this.polygons.push(event);
     }
 } 
