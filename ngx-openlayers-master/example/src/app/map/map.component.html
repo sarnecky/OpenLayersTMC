@@ -10,5 +10,5 @@
     <aol-layer-vector>
         <aol-source-vector #sourceVector></aol-source-vector>
     </aol-layer-vector>
-    <aol-interaction-draw type="Polygon" [source]="sourceVector.instance"></aol-interaction-draw>
+    <aol-interaction-draw type="Polygon" [source]="sourceVector.instance" (onDrawEnd)="catchEvent($event)"></aol-interaction-draw> 
  </aol-map>
