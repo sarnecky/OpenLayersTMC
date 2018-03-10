@@ -4,10 +4,12 @@ import {FormsModule} from '@angular/forms';
 import {AngularOpenlayersModule} from 'ngx-openlayers';
 
 import { MapComponent } from "./map/map.component";
+import { AppComponent } from "./app.component";
 
 @NgModule({
   declarations: [
-    MapComponent
+    MapComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -15,7 +17,7 @@ import { MapComponent } from "./map/map.component";
     AngularOpenlayersModule
   ],
   providers: [],
-  bootstrap: [MapComponent],
+  bootstrap: [AppComponent],
   schemas: [
     NO_ERRORS_SCHEMA
   ]
