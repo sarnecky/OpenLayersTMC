@@ -1,0 +1,14 @@
+.sidepanel {
+    background: #1F6B75;
+    width: 20%;
+    height: 100%;
+    float: right;
+  }
+
+  .sidepanel-title {
+    width: 100%;
+    font-size: 3em;
+    color: #ffffff;
+    display: block;
+    text-align: center;
+  } 
