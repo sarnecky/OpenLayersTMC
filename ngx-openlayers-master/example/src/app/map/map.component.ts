@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import ol from 'ol';
 import Sphere from 'ol/sphere';
-import Geometry from 'ol/geom/geometry';
 import { Polygon } from "../../CommonModels/polygon";
 
 @Component({
@@ -11,9 +10,9 @@ import { Polygon } from "../../CommonModels/polygon";
 })
 export class MapComponent{
     public zoom = 7;
-    
+
     @Output() onPolygonCreated: EventEmitter<Polygon>;
-    
+
     constructor(){
         this.onPolygonCreated = new EventEmitter<Polygon>();
     }
@@ -39,4 +38,20 @@ export class MapComponent{
         }
         return output;
     }
-} 
+
+  catchDrawStartEvent(event) {
+      console.log(event)
+      event.feature.setStyle(
+        new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color:'white',
+            width: 2
+          }),
+          fill: new ol.style.Fill({
+            color:'green'
+          })
+        })
+      );
+      //console.log(event.feature.getStyle())
+  }
+}
