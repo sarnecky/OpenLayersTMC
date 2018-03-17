@@ -1,6 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import ol from 'ol';
 import Sphere from 'ol/sphere';
+import Stroke from 'ol/style/stroke';
+import Fill from 'ol/style/fill';
+import Style from 'ol/style/style';
 import { Polygon } from "../../CommonModels/polygon";
 
 @Component({
@@ -41,17 +44,17 @@ export class MapComponent{
 
   catchDrawStartEvent(event) {
       console.log(event)
-      event.feature.setStyle(
-        new ol.style.Style({
-          stroke: new ol.style.Stroke({
+      let style =
+          Style({
+            stroke: new Stroke({
             color:'white',
-            width: 2
+            width: 10
           }),
-          fill: new ol.style.Fill({
+          fill: new Fill({
             color:'green'
           })
-        })
-      );
-      //console.log(event.feature.getStyle())
+        });
+      event.feature.setStyle(style);
+      console.log(event.feature.getStyle());
   }
 }
