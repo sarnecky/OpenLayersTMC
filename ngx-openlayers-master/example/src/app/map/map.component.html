@@ -10,11 +10,13 @@
     <aol-layer-vector>
         <aol-source-vector #sourceVector>
             <aol-interaction-default></aol-interaction-default>
-            <aol-interaction-draw [features]="feat" type="Polygon" [source]="sourceVector.instance" (onDrawStart)="catchDrawStartEvent($event)" (onDrawEnd)="catchDrawEndEvent($event)"></aol-interaction-draw>
-        </aol-source-vector>    
-        <aol-style>
-                <aol-style-stroke [color]="'red'"></aol-style-stroke>
-                <aol-style-fill [color]="[255,0,0,0.5]"></aol-style-fill>
-        </aol-style> 
+            <aol-interaction-draw [features]="feat" type="Polygon" [source]="sourceVector.instance" (onDrawStart)="catchDrawStartEvent($event)" (onDrawEnd)="catchDrawEndEvent($event)">
+                    <aol-style>
+                            <aol-style-stroke [color]="colorForPolygon"></aol-style-stroke>
+                            <aol-style-fill [color]="colorForPolygon"></aol-style-fill>
+                    </aol-style>
+            </aol-interaction-draw>
+        </aol-source-vector>     
     </aol-layer-vector> 
+
  </aol-map>

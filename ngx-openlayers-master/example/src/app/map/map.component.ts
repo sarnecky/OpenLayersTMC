@@ -13,14 +13,17 @@ import Feature from 'ol/feature';
 })
 export class MapComponent{
     public zoom = 7;
-
+    public colors: Array<string>;
+    public colorForPolygon: string;
     @Output() onPolygonCreated: EventEmitter<Polygon>;
 
     constructor(){
+        this.colors = new Array<string>();
+        this.colors = ['red', 'green', 'blue', 'yellow', 'black', 'pink'];
+        this.colorForPolygon = this.colors[0];
         this.onPolygonCreated = new EventEmitter<Polygon>();
     }
-
-    catchDrawEndEvent(event){
+      catchDrawEndEvent(event){
         var polygon = event.feature.O.geometry;
         console.log(event);
         var distance = this.calculateDistance(polygon);
@@ -44,18 +47,21 @@ export class MapComponent{
     }
 
     catchDrawStartEvent(event) {
-        console.log(event)
-        let style =
-            new Style({
-                stroke: new Stroke({
-                color:'white',
-                width: 10
-            }),
-            fill: new Fill({
-                color:'blue'
-            })
-        });
+        // console.log(event)
+        // let style =
+        //     new Style({
+        //         stroke: new Stroke({
+        //         color:'white',
+        //         width: 10
+        //     }),
+        //     fill: new Fill({
+        //         color:'blue'
+        //     })
+        // });
        //// this.setFeature(event.feature, style);
+       var index = Math.floor(Math.random()*this.colors.length-1)+0;
+       console.log("index:" + index + ", color: " + this.colors[index]);
+       this.colorForPolygon = this.colors[index];
     }
 
     setFeature(feature: Feature, style:Array<Style>){
