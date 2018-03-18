@@ -8,7 +8,9 @@
         <aol-source-osm></aol-source-osm>
     </aol-layer-tile>
     <aol-layer-vector>
-        <aol-source-vector #sourceVector></aol-source-vector>
-    </aol-layer-vector>
-    <aol-interaction-draw type="Polygon" [source]="sourceVector.instance" (onDrawStart)="catchDrawStartEvent($event)" (onDrawEnd)="catchDrawEndEvent($event)"></aol-interaction-draw>
+        <aol-source-vector #sourceVector>
+            <aol-interaction-default></aol-interaction-default>
+            <aol-interaction-draw [features]="feat" type="Polygon" [source]="sourceVector.instance" (onDrawStart)="catchDrawStartEvent($event)" (onDrawEnd)="catchDrawEndEvent($event)"></aol-interaction-draw>
+        </aol-source-vector>     
+    </aol-layer-vector> 
  </aol-map>

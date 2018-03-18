@@ -5,7 +5,7 @@ import Stroke from 'ol/style/stroke';
 import Fill from 'ol/style/fill';
 import Style from 'ol/style/style';
 import { Polygon } from "../../CommonModels/polygon";
-
+import Feature from 'ol/feature';
 @Component({
     selector: 'tmc-map',
     templateUrl: './map.component.html',
@@ -22,6 +22,7 @@ export class MapComponent{
 
     catchDrawEndEvent(event){
         var polygon = event.feature.O.geometry;
+        console.log(event);
         var distance = this.calculateDistance(polygon);
         console.log(distance);
         var polygonForEvent = new Polygon(null, distance, "blue");
@@ -42,19 +43,25 @@ export class MapComponent{
         return output;
     }
 
-  catchDrawStartEvent(event) {
-      console.log(event)
-      let style =
-          Style({
-            stroke: new Stroke({
-            color:'white',
-            width: 10
-          }),
-          fill: new Fill({
-            color:'green'
-          })
+    catchDrawStartEvent(event) {
+        console.log(event)
+        let style =
+            new Style({
+                stroke: new Stroke({
+                color:'white',
+                width: 10
+            }),
+            fill: new Fill({
+                color:'blue'
+            })
         });
-      event.feature.setStyle(style);
-      console.log(event.feature.getStyle());
-  }
+       // this.setFeature(event.feature, style);
+    }
+
+    setFeature(feature: Feature, style:Array<Style>){
+        var array = new Array<Style>();
+        array.push(style);
+        feature.setStyle(array)
+       // console.log(feature.getStyle());
+    }
 }
