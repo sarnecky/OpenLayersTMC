@@ -38,7 +38,7 @@ export class MapComponent{
             output = (Math.round(area/1000000 * 100) / 100) + " km"
         }
         else{
-            output = (Math.round(area*100)/100)+ " m";
+            output = (Math.round(area*100)/100)+ " m"; 
         }
         return output;
     }
@@ -55,7 +55,7 @@ export class MapComponent{
                 color:'blue'
             })
         });
-       // this.setFeature(event.feature, style);
+       //// this.setFeature(event.feature, style);
     }
 
     setFeature(feature: Feature, style:Array<Style>){
@@ -63,5 +63,6 @@ export class MapComponent{
         array.push(style);
         feature.setStyle(array)
        // console.log(feature.getStyle());
+       //
     }
 }
