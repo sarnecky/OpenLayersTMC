@@ -1,9 +1,11 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import ol from 'ol';
 import Sphere from 'ol/sphere';
-import Geometry from 'ol/geom/geometry';
+import Stroke from 'ol/style/stroke';
+import Fill from 'ol/style/fill';
+import Style from 'ol/style/style';
 import { Polygon } from "../../CommonModels/polygon";
-
+import Feature from 'ol/feature';
 @Component({
     selector: 'tmc-map',
     templateUrl: './map.component.html',
@@ -11,15 +13,19 @@ import { Polygon } from "../../CommonModels/polygon";
 })
 export class MapComponent{
     public zoom = 7;
-    
+    public colors: Array<string>;
+    public colorForPolygon: string;
     @Output() onPolygonCreated: EventEmitter<Polygon>;
-    
+
     constructor(){
+        this.colors = new Array<string>();
+        this.colors = ['red', 'green', 'blue', 'yellow', 'black', 'pink'];
+        this.colorForPolygon = this.colors[0];
         this.onPolygonCreated = new EventEmitter<Polygon>();
     }
-
-    catchDrawEndEvent(event){
+      catchDrawEndEvent(event){
         var polygon = event.feature.O.geometry;
+        console.log(event);
         var distance = this.calculateDistance(polygon);
         console.log(distance);
         var polygonForEvent = new Polygon(null, distance, "blue");
@@ -35,8 +41,34 @@ export class MapComponent{
             output = (Math.round(area/1000000 * 100) / 100) + " km"
         }
         else{
-            output = (Math.round(area*100)/100)+ " m";
+            output = (Math.round(area*100)/100)+ " m"; 
         }
         return output;
     }
-} 
+
+    catchDrawStartEvent(event) {
+        // console.log(event)
+        // let style =
+        //     new Style({
+        //         stroke: new Stroke({
+        //         color:'white',
+        //         width: 10
+        //     }),
+        //     fill: new Fill({
+        //         color:'blue'
+        //     })
+        // });
+       //// this.setFeature(event.feature, style);
+       var index = Math.floor(Math.random()*this.colors.length-1)+0;
+       console.log("index:" + index + ", color: " + this.colors[index]);
+       this.colorForPolygon = this.colors[index];
+    }
+
+    setFeature(feature: Feature, style:Array<Style>){
+        var array = new Array<Style>();
+        array.push(style);
+        feature.setStyle(array)
+       // console.log(feature.getStyle());
+       //
+    }
+}
