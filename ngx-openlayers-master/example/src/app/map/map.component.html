@@ -7,7 +7,7 @@
     <aol-layer-tile>
         <aol-source-osm></aol-source-osm>
     </aol-layer-tile>
-    <aol-layer-vector>
+    <aol-layer-vector [visible]="false">
         <aol-source-vector #sourceVector>
             <aol-interaction-default></aol-interaction-default>
             <aol-interaction-draw [features]="feat" type="Polygon" [source]="sourceVector.instance" (onDrawStart)="catchDrawStartEvent($event)" (onDrawEnd)="catchDrawEndEvent($event)">
@@ -16,7 +16,28 @@
                             <aol-style-fill [color]="colorForPolygon"></aol-style-fill>
                     </aol-style>
             </aol-interaction-draw>
-        </aol-source-vector>     
+        </aol-source-vector>         
     </aol-layer-vector> 
+    <aol-layer-vector>
+            <aol-source-vector *ngFor="let polygon of polygons">          
+                    <aol-feature>             
+                            <aol-style>                
+                                <aol-feature>
+                                    <aol-geometry-polygon>
+                                        <aol-collection-coordinates 
+                                            [coordinates]= "polygon.Coordinates"
+                                            [srid]="'EPSG:4326'"
+                                        >
 
+                                        </aol-collection-coordinates>
+                                    </aol-geometry-polygon>
+                                    <aol-style>
+                                        <aol-style-stroke [color]= "polygon.Color"></aol-style-stroke>
+                                        <aol-style-fill [color]= "polygon.Color"></aol-style-fill>
+                                    </aol-style>
+                                </aol-feature>
+                              </aol-style>
+                            </aol-feature>
+            </aol-source-vector>         
+        </aol-layer-vector> 
  </aol-map>

@@ -6,6 +6,7 @@ import Fill from 'ol/style/fill';
 import Style from 'ol/style/style';
 import { Polygon } from "../../CommonModels/polygon";
 import Feature from 'ol/feature';
+import proj from 'ol/proj';
 @Component({
     selector: 'tmc-map',
     templateUrl: './map.component.html',
@@ -14,6 +15,7 @@ import Feature from 'ol/feature';
 export class MapComponent{
     public zoom = 7;
     public colors: Array<string>;
+    public polygons: Array<Polygon>;
     public colorForPolygon: string;
     @Output() onPolygonCreated: EventEmitter<Polygon>;
 
@@ -22,13 +24,24 @@ export class MapComponent{
         this.colors = ['red', 'green', 'blue', 'yellow', 'black', 'pink'];
         this.colorForPolygon = this.colors[0];
         this.onPolygonCreated = new EventEmitter<Polygon>();
+        this.polygons = new Array<Polygon>();
     }
       catchDrawEndEvent(event){
         var polygon = event.feature.O.geometry;
+        var arrayOfCoordinates = polygon.A;
+        var coordinates = [];
+        for(var i=0; i<arrayOfCoordinates.length;i+=2)
+        {
+            var index = i;
+            var lonlat = proj.transform([arrayOfCoordinates[index],arrayOfCoordinates[index++]], 'EPSG:3857', 'EPSG:4326');
+            var lon = lonlat[0];
+            var lat = lonlat[1];
+            coordinates.push([lon, lat])
+        }
         console.log(event);
         var distance = this.calculateDistance(polygon);
-        console.log(distance);
-        var polygonForEvent = new Polygon(null, distance, "blue");
+        var polygonForEvent = new Polygon(null, distance, "blue", coordinates);
+        this.polygons.push(polygonForEvent);
         this.onPolygonCreated.emit(polygonForEvent)
     }
 
