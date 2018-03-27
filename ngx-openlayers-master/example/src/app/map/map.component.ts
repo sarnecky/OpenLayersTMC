@@ -33,7 +33,7 @@ export class MapComponent{
         for(var i=0; i<arrayOfCoordinates.length;i+=2)
         {
             var index = i;
-            var lonlat = proj.transform([arrayOfCoordinates[index],arrayOfCoordinates[index++]], 'EPSG:3857', 'EPSG:4326');
+            var lonlat = proj.transform([arrayOfCoordinates[index],arrayOfCoordinates[++index]], 'EPSG:3857', 'EPSG:4326');
             var lon = lonlat[0];
             var lat = lonlat[1];
             coordinates.push([lon, lat])
