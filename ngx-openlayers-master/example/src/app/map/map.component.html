@@ -18,7 +18,7 @@
             </aol-interaction-draw>
         </aol-source-vector>
     </aol-layer-vector>
-    <aol-layer-vector *ngFor="let polygon of polygons">
+    <aol-layer-vector [opacity] = 0.66 *ngFor="let polygon of polygons">
             <aol-source-vector >
                     <aol-feature>
                             <aol-style>
