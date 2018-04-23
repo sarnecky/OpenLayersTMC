@@ -1,8 +1,8 @@
 
 <aol-map [width]="'80%'" [height]="'100%'">
     <aol-interaction-mousewheelzoom></aol-interaction-mousewheelzoom>
-    <aol-view [zoom]="zoom">
-        <aol-coordinate [x]="18.068611" [y]="59.329444" [srid]="'EPSG:4326'"></aol-coordinate>
+    <aol-view [zoom]=5>
+        <aol-coordinate [x]="18.068611" [y]="52.329444" [srid]="'EPSG:4326'"></aol-coordinate>
     </aol-view>
     <aol-layer-tile>
         <aol-source-osm></aol-source-osm>
@@ -16,15 +16,15 @@
                             <aol-style-fill [color]="colorForPolygon"></aol-style-fill>
                     </aol-style>
             </aol-interaction-draw>
-        </aol-source-vector>         
-    </aol-layer-vector> 
+        </aol-source-vector>
+    </aol-layer-vector>
     <aol-layer-vector *ngFor="let polygon of polygons">
-            <aol-source-vector >          
-                    <aol-feature>             
-                            <aol-style>                
+            <aol-source-vector >
+                    <aol-feature>
+                            <aol-style>
                                 <aol-feature>
                                     <aol-geometry-polygon>
-                                        <aol-collection-coordinates 
+                                        <aol-collection-coordinates
                                             [coordinates]= "polygon.Coordinates"
                                             [srid]="'EPSG:4326'"
                                         >
@@ -38,6 +38,6 @@
                                 </aol-feature>
                               </aol-style>
                             </aol-feature>
-            </aol-source-vector>         
-        </aol-layer-vector> 
+            </aol-source-vector>
+        </aol-layer-vector>
  </aol-map>

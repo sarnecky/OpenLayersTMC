@@ -9,7 +9,10 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        {"glob":"geo.geojson", "input":"./", "output":"./assets/"},
+        {"glob":"geo2.geojson", "input":"./", "output":"./assets/"}
+
       ],
       "index": "index.html",
       "main": "main.ts",
