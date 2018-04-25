@@ -62,28 +62,4 @@ export class AppComponent{
     updateGeoJsonModel(polygon: Polygon){
         this.geoJsonFeatureCollection.createNewFeature(polygon);
     }
-    createLayerVoiv() {
-      var geo = new GeoJSON();
-      var features = 0;
-      var feat = geo.readFeatures(features);
-      console.log(feat[0].values_);
-
-      var arrayOfCoordinates = feat[0].values_.geometry.flatCoordinates;
-      var coordinates = [];
-      for(var i=0; i<arrayOfCoordinates.length;i+=2)
-      {
-        var index = i;
-        var lonlat = proj.transform([arrayOfCoordinates[index],arrayOfCoordinates[++index]], 'EPSG:3857', 'EPSG:4326');
-        var lon = lonlat[0]*16;
-        var lat = lonlat[1]*16;
-        coordinates.push([lon, lat])
-      }
-      console.log(event);
-      var cord = [[18, 52], [20, 52], [20, 56], [18, 52]];
-      var polygonForEvent = new Polygon(null, null, "red", cord,"");
-      this.polygons.push(polygonForEvent);
-
-      console.log(this.polygons);
-    }
-        //this.maxArea += this.convertArea(event.AreaSurface);
 }
