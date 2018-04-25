@@ -102,14 +102,13 @@ export class MapComponent{
         if(czy) {
           console.log("UWAGA UDALO SIE: JESTEM" + i + "POLIGONEM!!!");
           this.polygons.push(polygonForEvent);
+          polygonForEvent.Voivodeship = this.feat[i].values_.jpt_nazwa_;
           this.onPolygonCreated.emit(polygonForEvent)
         }
       }
     }
 
     calculateDistance(polygon: ol.geom.Geometry): number {
-        //console.log("calculate")
-        //console.log(polygon)
         var area = Sphere.getArea(polygon);
         var output;
         if(area > 10000){
@@ -131,7 +130,5 @@ export class MapComponent{
         var array = new Array<Style>();
         array.push(style);
         feature.setStyle(array)
-       // console.log(feature.getStyle());
-       //
     }
 }
