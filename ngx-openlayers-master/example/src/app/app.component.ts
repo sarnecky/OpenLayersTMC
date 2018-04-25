@@ -80,7 +80,7 @@ export class AppComponent{
       }
       console.log(event);
       var cord = [[18, 52], [20, 52], [20, 56], [18, 52]];
-      var polygonForEvent = new Polygon(null, null, "red", cord);
+      var polygonForEvent = new Polygon(null, null, "red", cord,"");
       this.polygons.push(polygonForEvent);
 
       console.log(this.polygons);
