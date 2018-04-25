@@ -97,8 +97,7 @@ export class MapComponent{
         // console.log(turfPolygon);
         // var myPolygon = geo.writeFeatureObject(event.feature);
         // console.log(myPolygon);
-        var czy = booleanContains(geo.writeFeatureObject(this.feat[i]),
-          geo.writeFeatureObject(event.feature));
+        var czy = booleanContains(geo.writeFeatureObject(this.feat[i]), geo.writeFeatureObject(event.feature));
         if(czy) {
           console.log("UWAGA UDALO SIE: JESTEM" + i + "POLIGONEM!!!");
           this.polygons.push(polygonForEvent);
