@@ -20,6 +20,8 @@ export class MapComponent{
     public polygons: Array<Polygon>;
     public feat: Array<Feature>;
     public colorForPolygon: string;
+    public fileToDownload: boolean;
+    public downloadJsonHref: string;
     @Output() onPolygonCreated: EventEmitter<Polygon>;
 
     constructor(){
@@ -28,7 +30,13 @@ export class MapComponent{
         this.colorForPolygon = this.colors[0];
         this.onPolygonCreated = new EventEmitter<Polygon>();
         this.polygons = new Array<Polygon>();
+        this.fileToDownload = false;
         this.createPolishMap();
+    }
+
+    generateDownloadJsonUri(objectToJson: any){
+        var theJson = JSON.stringify(objectToJson);
+       // var uri = this
     }
 
     createPolishMap() {
