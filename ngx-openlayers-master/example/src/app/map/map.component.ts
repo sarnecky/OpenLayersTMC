@@ -22,40 +22,16 @@ export class MapComponent{
     public polygons: Array<Polygon>;
     public feat: Array<Feature>;
     public colorForPolygon: string;
-    public fileToDownload: boolean;
-    public downloadJsonHref: SafeUrl;
-    private _sanitizer: DomSanitizer;
-
     @Output() onPolygonCreated: EventEmitter<Polygon>;
 
-    constructor(private sanitizer: DomSanitizer){
-        this._sanitizer = sanitizer;
+    constructor(){
+
         this.colors = new Array<string>();
         this.colors = ['red', 'green', 'blue', 'yellow', 'black', 'pink', 'magenta', 'white', 'cyan'];
         this.colorForPolygon = this.colors[0];
         this.onPolygonCreated = new EventEmitter<Polygon>();
         this.polygons = new Array<Polygon>();
-        this.fileToDownload = false;
         this.createPolishMap();
-    }
-
-    generateDownloadJsonUri(objectToJson: any){
-        var cache = [];
-        var json = JSON.stringify(objectToJson, function(key, value) {
-          if (typeof value === 'object' && value !== null) {
-              if (cache.indexOf(value) !== -1) {
-                  // Circular reference found, discard key
-                  return;
-              }
-              // Store value in our collection
-              cache.push(value);
-          }
-          return value;
-        });
-
-        var uri = this._sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8,"+ encodeURIComponent(json));
-        this.downloadJsonHref = uri;
-        this.fileToDownload = true;
     }
 
     createPolishMap() {
@@ -98,7 +74,6 @@ export class MapComponent{
       console.log(this.polygons);
     }
 
-
     catchDrawEndEvent(event){
       var polygon = event.feature.O.geometry;
       var geo = new GeoJSON();
@@ -128,7 +103,6 @@ export class MapComponent{
           console.log("UWAGA UDALO SIE: JESTEM" + i + "POLIGONEM!!!");
           this.polygons.push(polygonForEvent);
           this.onPolygonCreated.emit(polygonForEvent)
-          this.generateDownloadJsonUri(polygonForEvent);
         }
       }
     }

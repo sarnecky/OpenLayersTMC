@@ -9,3 +9,6 @@
     </table>
 </div>
 <tmc-map (onPolygonCreated)="catchPolygonCreatedEvent($event)">Map is loading...</tmc-map>
+<button type="submit" [hidden]="!fileToDownload">
+        <a class="btn btn-clear" title="Download JSON" [href]="downloadJsonHref" download="polygons.geojson">File with polygons</a>
+</button>

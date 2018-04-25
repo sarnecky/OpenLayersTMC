@@ -8,7 +8,7 @@ import proj from 'ol/proj';
 import VectorL from 'ol/layer/Vector'
 import OL3Parser from "../../node_modules/jsts/org/locationtech/jts/io/OL3Parser";
 import GeometryFactory from "../../node_modules/jsts/org/locationtech/jts/geom/GeometryFactory";
-
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
     selector: 'tmc-app',
     templateUrl: './app.component.html',
@@ -18,28 +18,43 @@ import GeometryFactory from "../../node_modules/jsts/org/locationtech/jts/geom/G
 export class AppComponent{
     public zoom = 7;
     public polygons: Array<Polygon>
-    constructor(){
+    public fileToDownload: boolean;
+    public downloadJsonHref: SafeUrl;
+    private _sanitizer: DomSanitizer;
+
+    constructor(private sanitizer: DomSanitizer){
+        this._sanitizer = sanitizer;
+        this.fileToDownload = false;
         this.polygons = new Array<Polygon>();
 
     }
+
+    generateDownloadJsonUri(objectToJson: any){
+        var cache = [];
+        var json = JSON.stringify(objectToJson, function(key, value) {
+          if (typeof value === 'object' && value !== null) {
+              if (cache.indexOf(value) !== -1) {
+                  // Circular reference found, discard key
+                  return;
+              }
+              // Store value in our collection
+              cache.push(value);
+          }
+          return value;
+        });
+
+        var uri = this._sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8,"+ encodeURIComponent(json));
+        this.downloadJsonHref = uri;
+        this.fileToDownload = true;
+    }
+
     catchPolygonCreatedEvent(event){
         console.log("received new polygon");
         console.log(event);
-        // console.log("received new polygon");
-        // console.log(event);
         this.polygons.push(event);
-        // var reader = new OL3Parser(new GeometryFactory(),ol);
-        // reader.extend();
-        // if(this.polygons.length>1) {
-        //   var one = reader.read(this.polygons[0].Geometry);
-        //   var two = reader.read(this.polygons[1]);
-        //   var union = one.union(two);
-        //
-        //   console.log(union.Geometry);
+        this.generateDownloadJsonUri(this.polygons);
+    }
 
-
-        //this.createLayerVoiv();
-        }
     createLayerVoiv() {
       var geo = new GeoJSON();
       var features = 0;
