@@ -9,6 +9,8 @@ import Feature from 'ol/feature';
 import proj from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON'
 import {default as booleanContains} from '@turf/boolean-contains';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 @Component({
     selector: 'tmc-map',
     templateUrl: './map.component.html',
@@ -21,10 +23,13 @@ export class MapComponent{
     public feat: Array<Feature>;
     public colorForPolygon: string;
     public fileToDownload: boolean;
-    public downloadJsonHref: string;
+    public downloadJsonHref: SafeUrl;
+    private _sanitizer: DomSanitizer;
+
     @Output() onPolygonCreated: EventEmitter<Polygon>;
 
-    constructor(){
+    constructor(private sanitizer: DomSanitizer){
+        this._sanitizer = sanitizer;
         this.colors = new Array<string>();
         this.colors = ['red', 'green', 'blue', 'yellow', 'black', 'pink', 'magenta', 'white', 'cyan'];
         this.colorForPolygon = this.colors[0];
@@ -35,8 +40,22 @@ export class MapComponent{
     }
 
     generateDownloadJsonUri(objectToJson: any){
-        var theJson = JSON.stringify(objectToJson);
-       // var uri = this
+        var cache = [];
+        var json = JSON.stringify(objectToJson, function(key, value) {
+          if (typeof value === 'object' && value !== null) {
+              if (cache.indexOf(value) !== -1) {
+                  // Circular reference found, discard key
+                  return;
+              }
+              // Store value in our collection
+              cache.push(value);
+          }
+          return value;
+        });
+
+        var uri = this._sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8,"+ encodeURIComponent(json));
+        this.downloadJsonHref = uri;
+        this.fileToDownload = true;
     }
 
     createPolishMap() {
@@ -61,7 +80,6 @@ export class MapComponent{
       ]}
       this.feat = geo.readFeatures(features);
       console.log(this.feat[0].values_);
-
       for(let q= 0; q < 16;q++) {
         var arrayOfCoordinates = this.feat[q].values_.geometry.flatCoordinates;
         var coordinates = [];
@@ -110,6 +128,7 @@ export class MapComponent{
           console.log("UWAGA UDALO SIE: JESTEM" + i + "POLIGONEM!!!");
           this.polygons.push(polygonForEvent);
           this.onPolygonCreated.emit(polygonForEvent)
+          this.generateDownloadJsonUri(polygonForEvent);
         }
       }
     }
