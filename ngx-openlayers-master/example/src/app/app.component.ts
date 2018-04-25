@@ -9,7 +9,8 @@ import VectorL from 'ol/layer/Vector'
 import OL3Parser from "../../node_modules/jsts/org/locationtech/jts/io/OL3Parser";
 import GeometryFactory from "../../node_modules/jsts/org/locationtech/jts/geom/GeometryFactory";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { GeoJsonModel } from "../CommonModels/geoJsonModel";
+import { GeoJsonFeature } from "../CommonModels/geoJsonFeature";
+import { GeoJsonFeatureCollection } from "../CommonModels/geoJsonFeatureCollection";
 @Component({
     selector: 'tmc-app',
     templateUrl: './app.component.html',
@@ -22,13 +23,13 @@ export class AppComponent{
     public fileToDownload: boolean;
     public downloadJsonHref: SafeUrl;
     private _sanitizer: DomSanitizer;
-    public geoJsonModel: GeoJsonModel;
+    public geoJsonFeatureCollection: GeoJsonFeatureCollection;
 
     constructor(private sanitizer: DomSanitizer){
         this._sanitizer = sanitizer;
         this.fileToDownload = false;
         this.polygons = new Array<Polygon>();
-        this.geoJsonModel = new GeoJsonModel();
+        this.geoJsonFeatureCollection = new GeoJsonFeatureCollection();
     }
 
     generateDownloadJsonUri(objectToJson: any){
@@ -55,11 +56,11 @@ export class AppComponent{
         console.log(event);
         this.updateGeoJsonModel(event);
         this.polygons.push(event);
-        this.generateDownloadJsonUri(this.geoJsonModel);
+        this.generateDownloadJsonUri(this.geoJsonFeatureCollection);
     }
 
     updateGeoJsonModel(polygon: Polygon){
-        this.geoJsonModel.updateGeometry(polygon);
+        this.geoJsonFeatureCollection.createNewFeature(polygon);
     }
     createLayerVoiv() {
       var geo = new GeoJSON();

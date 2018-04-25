@@ -67,7 +67,7 @@ export class MapComponent{
           var lat = lonlat[1];
           coordinates.push([lon, lat])
         }
-        var polygonForEvent = new Polygon(this.feat[q].values_.geometry, null, this.colors[q%3], coordinates);
+        var polygonForEvent = new Polygon(this.feat[q].values_.geometry, null, this.colors[q%3], coordinates, this.feat[q].values_.jpt_nazwa_);
         this.polygons.push(polygonForEvent);
         this.onPolygonCreated.emit(polygonForEvent)
       }
@@ -89,7 +89,7 @@ export class MapComponent{
       }
       var distance = this.calculateDistance(polygon);
       var color = Math.floor(Math.random() * 6);
-      var polygonForEvent = new Polygon(polygon, distance, this.colors[color], coordinates);
+      var polygonForEvent = new Polygon(polygon, distance, this.colors[color], coordinates, this.feat[i].values_.jpt_nazwa_);
 
       for(let i = 0; i < 16; i++) {
         // console.log(this.feat[i].values_.geometry);
